@@ -11,9 +11,13 @@ public class TicTacToeFrame extends JFrame
     public TicTacToeFrame()
     {
         setTitle("Tic Tac Toe");
-        setSize(800, 800);
+        setSize(400, 450); // Adjusted size to accommodate the quit button
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(3, 3));
+        setLayout(new BorderLayout());
+
+        // Panel for the game board
+        JPanel boardPanel = new JPanel();
+        boardPanel.setLayout(new GridLayout(3, 3));
 
         buttons = new TicTacToeButton[3][3];
         currentPlayer = 'X';
@@ -25,14 +29,21 @@ public class TicTacToeFrame extends JFrame
             {
                 buttons[row][col] = new TicTacToeButton(row, col);
                 buttons[row][col].addActionListener(new ButtonClickListener());
-                add(buttons[row][col]);
+                boardPanel.add(buttons[row][col]);
             }
         }
 
-        // Quit button
+        // Add the board panel to the frame
+        add(boardPanel, BorderLayout.CENTER);
+
+        // Panel for the quit button
+        JPanel quitPanel = new JPanel();
         JButton quitButton = new JButton("Quit");
         quitButton.addActionListener(e -> System.exit(0));
-        add(quitButton);
+        quitPanel.add(quitButton);
+
+        // Add the quit panel to the frame
+        add(quitPanel, BorderLayout.SOUTH);
     }
 
     private class ButtonClickListener implements ActionListener
@@ -54,33 +65,26 @@ public class TicTacToeFrame extends JFrame
         }
     }
 
-    private void checkGameState()
-    {
+    private void checkGameState() {
         // Check for a win
-        if (checkForWin())
-        {
+        if (checkForWin()) {
             JOptionPane.showMessageDialog(this, "Player " + (currentPlayer == 'X' ? 'O' : 'X') + " wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
             int choice = JOptionPane.showConfirmDialog(this, "Do you want to play again?", "Play Again", JOptionPane.YES_NO_OPTION);
-            if (choice == JOptionPane.YES_OPTION)
-            {
+            if (choice == JOptionPane.YES_OPTION) {
                 resetGame();
-            } else
-            {
+            } else {
                 System.exit(0);
             }
             return;
         }
 
         // Check for a tie
-        if (checkForTie())
-        {
+        if (checkForTie()) {
             JOptionPane.showMessageDialog(this, "The game is a tie!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
             int choice = JOptionPane.showConfirmDialog(this, "Do you want to play again?", "Play Again", JOptionPane.YES_NO_OPTION);
-            if (choice == JOptionPane.YES_OPTION)
-            {
+            if (choice == JOptionPane.YES_OPTION) {
                 resetGame();
-            } else
-            {
+            } else {
                 System.exit(0);
             }
         }
