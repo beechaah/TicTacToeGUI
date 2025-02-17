@@ -11,18 +11,18 @@ public class TicTacToeFrame extends JFrame
     public TicTacToeFrame()
     {
         setTitle("Tic Tac Toe");
-        setSize(400, 450); // Adjusted size to accommodate the quit button
+        setSize(800, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Panel for the game board
+
         JPanel boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(3, 3));
 
         buttons = new TicTacToeButton[3][3];
         currentPlayer = 'X';
 
-        // Initialize buttons
+
         for (int row = 0; row < 3; row++)
         {
             for (int col = 0; col < 3; col++)
@@ -33,16 +33,16 @@ public class TicTacToeFrame extends JFrame
             }
         }
 
-        // Add the board panel to the frame
+
         add(boardPanel, BorderLayout.CENTER);
 
-        // Panel for the quit button
+
         JPanel quitPanel = new JPanel();
         JButton quitButton = new JButton("Quit");
         quitButton.addActionListener(e -> System.exit(0));
         quitPanel.add(quitButton);
 
-        // Add the quit panel to the frame
+
         add(quitPanel, BorderLayout.SOUTH);
     }
 
@@ -56,7 +56,6 @@ public class TicTacToeFrame extends JFrame
             {
                 button.setPlayer(currentPlayer);
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-                // Check for win or tie
                 checkGameState();
             } else
             {
@@ -66,7 +65,6 @@ public class TicTacToeFrame extends JFrame
     }
 
     private void checkGameState() {
-        // Check for a win
         if (checkForWin()) {
             JOptionPane.showMessageDialog(this, "Player " + (currentPlayer == 'X' ? 'O' : 'X') + " wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
             int choice = JOptionPane.showConfirmDialog(this, "Do you want to play again?", "Play Again", JOptionPane.YES_NO_OPTION);
@@ -78,7 +76,7 @@ public class TicTacToeFrame extends JFrame
             return;
         }
 
-        // Check for a tie
+
         if (checkForTie()) {
             JOptionPane.showMessageDialog(this, "The game is a tie!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
             int choice = JOptionPane.showConfirmDialog(this, "Do you want to play again?", "Play Again", JOptionPane.YES_NO_OPTION);
@@ -92,7 +90,7 @@ public class TicTacToeFrame extends JFrame
 
     private boolean checkForWin()
     {
-        // Check rows and columns
+
         for (int i = 0; i < 3; i++)
         {
             if (buttons[i][0].getText().equals(buttons[i][1].getText()) && buttons[i][1].getText().equals(buttons[i][2].getText()) && !buttons[i][0].isEmpty())
@@ -105,7 +103,7 @@ public class TicTacToeFrame extends JFrame
             }
         }
 
-        // Check diagonals
+
         if (buttons[0][0].getText().equals(buttons[1][1].getText()) && buttons[1][1].getText().equals(buttons[2][2].getText()) && !buttons[0][0].isEmpty())
         {
             return true;
